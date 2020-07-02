@@ -1,29 +1,61 @@
-# Реализовать базовый класс Worker (работник), в котором определить атрибуты: name, surname, position (должность),
-# income (доход). Последний атрибут должен быть защищенным и ссылаться на словарь, содержащий элементы: оклад и
-# премия, например, {"wage": wage, "bonus": bonus}. Создать класс Position (должность) на базе класса Worker. В
-# классе Position реализовать методы получения полного имени сотрудника (get_full_name) и дохода с учетом премии (
-# get_total_income). Проверить работу примера на реальных данных (создать экземпляры класса Position,
-# передать данные, проверить значения атрибутов, вызвать методы экземпляров).
+class Cell:
+    def __init__(self, num=0):
+        self.cells_num = num
+
+    def __str__(self):
+        return f'Кол-во ячеек новой клетки: {self.cells_num}'
+
+    def __add__(self, other):
+        new_cell = Cell()
+        new_cell.cells_num = self.cells_num + other.cells_num
+        return new_cell
+
+    def __sub__(self, other):
+        new_cell = Cell()
+        new_cell.cells_num = self.cells_num - other.cells_num
+        if self.cells_num > other.cells_num:
+            return new_cell
+        else:
+            return f'Нельзя разделить клетки'
+
+    def __mul__(self, other):
+        new_cell = Cell()
+        new_cell.cells_num = self.cells_num * other.cells_num
+        return new_cell
+
+    def __truediv__(self, other):
+        new_cell = Cell()
+        new_cell.cells_num = self.cells_num // other.cells_num
+        return new_cell
+
+    def make_order(self, row):
+        result = ''
+        for i in range(int(self.cells_num/row)):
+            result += f'{"*" * row}\n'
+        result += f'{"*" * (self.cells_num % row)}'
+        return result
 
 
-class Worker:
-    def __init__(self, name, surname, position, wage, bonus):
-        self.name = name
-        self.surname = surname
-        self.position = position
-        self._income = {"wage": wage, "bonus": bonus}
+a = 15
+a = Cell(a)
 
+b = 3
+b = Cell(b)
 
-class Position(Worker):
-    def get_full_name(self):
-        return self.name + " " + self.surname
+c = 2
+c = Cell(c)
 
-    def get_total_income(self):
-        return self._income["wage"] + self._income["bonus"]
+d = a + b + c
+print(d)
 
+d = a - b - c
+print(d)
 
-dentist = Position("Bill", "Gates", "Dentist", 30000, 2000)
-a = dentist.get_full_name()
-print(f"worker's full name is {a}")
-b = dentist.get_total_income()
-print(f"worker's total income is {b}")
+d = a * b * c
+print(d)
+
+d = a / b / c
+print(d)
+
+print()
+print(a.make_order(4))

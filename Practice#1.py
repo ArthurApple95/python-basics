@@ -1,33 +1,19 @@
-# Создать класс TrafficLight (светофор) и определить у него один атрибут color (цвет) и метод running (запуск).
-# Атрибут реализовать как приватный. В рамках метода реализовать переключение светофора в режимы: красный, желтый,
-# зеленый. Продолжительность первого состояния (красный) составляет 7 секунд, второго (желтый) — 2 секунды,
-# третьего (зеленый) — на ваше усмотрение. Переключение между режимами должно осуществляться только в указанном
-# порядке (красный, желтый, зеленый). Проверить работу примера, создав экземпляр и вызвав описанный метод.
-
-from time import sleep
+import numpy as np
 
 
-class TrafficLight:
-    count = 0
+class Matrix:
+    def __init__(self, *args):
+        self.args = args
+        self.args = np.array(self.args)
 
-    def __init__(self):
-        self.__colour = ["Red", "Yellow", "Green"]
+    def __str__(self):
+        return f"{self.args}"
 
-    def running(self, count):
-        print(self.__colour[int(count)])
-        if int(count) % 2 == 0:
-            sleep(7)
-        else:
-            sleep(2)
+    def __add__(self, other):
+        return Matrix(self.args + other.args)
 
 
-a = TrafficLight()
-i = 0
-timesLimit = int(input('How many colour changes would you like? '))
-times = 0
-while times < timesLimit:
-    a.running(i)
-    i += 1
-    if i == 3:
-        i = 0
-    times += 1
+readyMatrix = Matrix([10, 2, 30], [3, 40, 50], [50, 60, 7])
+readyMatrix2 = Matrix([1, 2, 3], [4, 5, 6], [7, 8, 9])
+readyMatrix3 = readyMatrix + readyMatrix2
+print(readyMatrix3)
